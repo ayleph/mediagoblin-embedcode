@@ -17,22 +17,21 @@
 #}
 
 {% block embed_code -%}
+<p>
 <div id="embed_code">
   {% if media.media_type == "mediagoblin.media_types.video" %}
     {% set display_type, display_path = media.get_display_media() %}
-    <p/>
     <h3>{% trans %}Embed{% endtrans %}</h3>
     <p>
-    <pre><code>
-&lt;video controls data-setup='{"height": {{ media.media_data.height }}, "width": {{ media.media_data.width }} }'&gt;
-  &lt;source src="{{ request.app.public_store.file_url(display_path) }}"
-  &lt;source src="{{ request.host_url + request.app.public_store.file_url(media.media_files.webm_video) }}"
-  {% if media.media_data %} type="{{ media.media_data.source_type() }}" {% else %} type="{{ media.media_manager['default_webm_type'] }}" {% endif %} /&gt;
-<br/>
-  {%- trans -%}Sorry, this video will not work because your web browser does not support HTML5 video.{%- endtrans -%}<br/>
-&lt;/video&gt;
-    </code></pre>
+    <pre><code>&lt;video controls data-setup='{"height": {{ media.media_data.height }}, "width": {{ media.media_data.width }} }'&gt;  &lt;source src="{{ request.host_url + request.app.public_store.file_url(display_path) }}"  &lt;source src="{{ request.host_url + request.app.public_store.file_url(media.media_files.webm_video) }}" {% if media.media_data %} type='{{ media.media_data.source_type() }}' {% else %} type='{{ media.media_manager['default_webm_type'] }}' {% endif %} /&gt; &lt;div class="no_html5"&gt; {%- trans -%}Sorry, this video will not work because your web browser does not support HTML5 video.{%- endtrans -%} &lt;/div&gt; &lt;/video&gt; </code></pre>
   {% endif %}
+
+  {% if media.media_type == "mediagoblin.media_types.audio" %}
+    <h3>{% trans %}Embed{% endtrans %}</h3>
+    <p>
+    <pre><code>&lt;audio class="audio-player" controls="controls" preload="metadata"&gt; &lt;source src="{{ request.host_url + request.app.public_store.file_url( media.media_files.webm_audio) }}" type="audio/webm; codecs=vorbis" /&gt; &lt;div class="no_html5"&gt; {%- trans -%}Sorry, this audio will not work because your web browser does not support HTML5 audio.{%- endtrans -%} &lt;/div&gt; &lt;/audio&gt;</code></pre>
+  {% endif %}
+
+
   </div>
-  </p>
 {% endblock %}
