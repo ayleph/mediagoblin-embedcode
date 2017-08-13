@@ -17,22 +17,23 @@
 #}
 
 {% block embed_code -%}
+<p/>
 <div id="embed_code">
   {% if media.media_type == "mediagoblin.media_types.video" %}
-    {% set display_type, display_path = media.get_display_media() %}
-    <p/>
+    {% set file_url = request.app.public_store.file_url(media.media_files.webm_video) %}
+    {% if '://' not in file_url %}
+      {% set file_url = request.host_url + file_url %}
+    {% endif %}
     <h3>{% trans %}Embed{% endtrans %}</h3>
     <p>
     <pre><code>
 &lt;video controls data-setup='{"height": {{ media.media_data.height }}, "width": {{ media.media_data.width }} }'&gt;
-  &lt;source src="{{ request.app.public_store.file_url(display_path) }}"
-  &lt;source src="{{ request.host_url + request.app.public_store.file_url(media.media_files.webm_video) }}"
-  {% if media.media_data %} type="{{ media.media_data.source_type() }}" {% else %} type="{{ media.media_manager['default_webm_type'] }}" {% endif %} /&gt;
+  &lt;source src='{{ file_url }}'{% if media.media_data %} type='{{ media.media_data.source_type() }}' {% else %} type='{{ media.media_manager['default_webm_type'] }}' {% endif %} /&gt;
 <br/>
   {%- trans -%}Sorry, this video will not work because your web browser does not support HTML5 video.{%- endtrans -%}<br/>
 &lt;/video&gt;
     </code></pre>
+    </p>
   {% endif %}
-  </div>
-  </p>
+</div>
 {% endblock %}
