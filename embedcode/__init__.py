@@ -33,9 +33,9 @@ def setup_plugin():
     pluginapi.register_template_path(os.path.join(PLUGIN_DIR, 'templates'))
 
     pluginapi.register_template_hooks(
-        {'media_sideinfo': '/mediagoblin/plugins/embedcode/embed_code.html'})
-    
-    _log.info('Finished setting up embedcode plugin.')
+        {'media_sideinfo': 'mediagoblin/plugins/embedcode/embed_code.html'})
+
+    _log.info('Done setting up embedcode!')
 
 hooks = {
     'setup': setup_plugin
