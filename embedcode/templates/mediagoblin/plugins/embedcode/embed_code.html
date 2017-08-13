@@ -37,9 +37,20 @@
   {% endif %}
 
   {% if media.media_type == "mediagoblin.media_types.audio" %}
+    {% set file_url = request.app.public_store.file_url(media.media_files.webm_audio) %}
+    {% if '://' not in file_url %}
+      {% set file_url = request.host_url + file_url %}
+    {% endif %}
     <h3>{% trans %}Embed{% endtrans %}</h3>
     <p>
-    <pre><code>&lt;audio class="audio-player" controls="controls" preload="metadata"&gt; &lt;source src="{{ request.host_url + request.app.public_store.file_url( media.media_files.webm_audio) }}" type="audio/webm; codecs=vorbis" /&gt; &lt;div class="no_html5"&gt; {%- trans -%}Sorry, this audio will not work because your web browser does not support HTML5 audio.{%- endtrans -%} &lt;/div&gt; &lt;/audio&gt;</code></pre>
+    <pre>
+&lt;audio class='audio-player' controls='controls' preload='metadata'&gt;
+  &lt;source src='{{ file_url }}' type='audio/webm; codecs="vorbis"' /&gt;
+<br/>
+  {%- trans -%}Sorry, this audio will not work because your web browser does not support HTML5 audio.{%- endtrans -%}<br/>
+&lt;/audio&gt;
+    </pre>
+    </p>
 {% endif %}
 </div>
 {% endblock %}
