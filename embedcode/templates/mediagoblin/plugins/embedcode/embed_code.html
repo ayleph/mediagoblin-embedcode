@@ -35,5 +35,11 @@
     </pre>
     </p>
   {% endif %}
+
+  {% if media.media_type == "mediagoblin.media_types.audio" %}
+    <h3>{% trans %}Embed{% endtrans %}</h3>
+    <p>
+    <pre><code>&lt;audio class="audio-player" controls="controls" preload="metadata"&gt; &lt;source src="{{ request.host_url + request.app.public_store.file_url( media.media_files.webm_audio) }}" type="audio/webm; codecs=vorbis" /&gt; &lt;div class="no_html5"&gt; {%- trans -%}Sorry, this audio will not work because your web browser does not support HTML5 audio.{%- endtrans -%} &lt;/div&gt; &lt;/audio&gt;</code></pre>
+{% endif %}
 </div>
 {% endblock %}
