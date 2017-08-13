@@ -26,13 +26,13 @@
     {% endif %}
     <h3>{% trans %}Embed{% endtrans %}</h3>
     <p>
-    <pre><code>
+    <pre>
 &lt;video controls data-setup='{"height": {{ media.media_data.height }}, "width": {{ media.media_data.width }} }'&gt;
-  &lt;source src='{{ file_url }}'{% if media.media_data %} type='{{ media.media_data.source_type() }}' {% else %} type='{{ media.media_manager['default_webm_type'] }}' {% endif %} /&gt;
+  &lt;source src='{{ file_url }}'{% if media.media_data %} type='{{ media.media_data.source_type() }}' {% else %} type='{{ media.media_manager['default_webm_type'] }}' {% endif %}/&gt;
 <br/>
   {%- trans -%}Sorry, this video will not work because your web browser does not support HTML5 video.{%- endtrans -%}<br/>
 &lt;/video&gt;
-    </code></pre>
+    </pre>
     </p>
   {% endif %}
 </div>
